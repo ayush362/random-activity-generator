@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
 
-export const Mainsection = () => {
+export const MainSection = () => {
     const [activity, setActivity] = useState(null);
     const [choice, setChoice] = useState("");
     const fetchRandomActivity = async () => {
-        try {
-            let apiUrl = "https://bored-api.appbrewery.com/random";
-            if (choice) {
-                console.log(apiUrl);
-                apiUrl = `https://bored-api.appbrewery.com/filter?type=${choice}`;
-            }
-            const response = await fetch(apiUrl);
-            console.log(response);
-            if (!response.ok) {
-                throw new Error("Faile to fetch api");
-            }
-            const data = await response.json();
-            setActivity(data);
-        } catch (error) {}
+        const baseApiUrl = "https://bored-api.appbrewery.com/";
+        const path = (choice === "") ? "random" :  "filter?type=${choice}";
+        const finalPath = `${baseApiUrl}/${path}`;
+
+        fetch(finalPath)
+            .then((response) => response.json())
+            .then((data) =>setActivity(data)) // Can also be just written as just ".then(setActivity)" as the data is automatically the first argument
+            .catch((error) => console.error("Error:", error))
     };
+
+    // Use this to automatically fetch data on first load
+    useEffect(() => {
+        fetchRandomActivity();
+    }, []);
+
     return (
         <section className={"h-screen bg-black flex flex-col  items-center"}>
             <h1 className="text-3xl mt-40 font-bold text-red-500">
