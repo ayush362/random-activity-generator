@@ -1,11 +1,11 @@
-import Layout from "../components/layout";
+// import Layout from "../components/layout";
 import React from "react";
-import { Mainsection } from "@/sections/Mainsection";
+import { MainSection } from "@/sections/main-section";
 
 export default function Home() {
     return (
         // <Layout>
-            <Mainsection />
+            <MainSection />
         /* </Layout> */
     );
 }
